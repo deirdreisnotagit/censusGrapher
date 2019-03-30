@@ -35,8 +35,7 @@ factory Post.fromJson(Map ddsjson) {
   String myLC = 'xx';
   String myUC = 'xx';
  //  print(ddsjson['ocd-division/country:us/state:ca']['name']);
-  void f() {
-  };
+//
   ddsjson.forEach((key, value) {
       print(value);
       if (value['officeIndices'][0] == 3) {
@@ -99,10 +98,10 @@ class FirstRoute extends StatelessWidget {
         child: RaisedButton(
           child: Text('Know my District'),
           onPressed: () {
-            fetchPost();
+         //   fetchPost();
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SecondRoute()),
+              MaterialPageRoute(builder: (context) => SecondRoute(fetchPost())),
             );
           }
         ),
