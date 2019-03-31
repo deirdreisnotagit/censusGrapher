@@ -11,10 +11,7 @@ Future<Post> fetchPost() async {
   if (response.statusCode == 200) {
     print('success');
     // If the call to the server was successful, parse the JSON
-
     Map myDivisions = json.decode(response.body)['divisions'];
-
-
     return Post.fromJson(myDivisions);
   } else {
     print('fail');
@@ -34,13 +31,10 @@ factory Post.fromJson(Map ddsjson) {
   String mySt = 'xx';
   String myLC = 'xx';
   String myUC = 'xx';
- //  print(ddsjson['ocd-division/country:us/state:ca']['name']);
-//
+
   ddsjson.forEach((key, value) {
       print(value);
       if (value['officeIndices'][0] == 3) {
-      //if(key.contains("sldl:")) {
-       // print(key);
         myLC = key.split("sldl:")[1];
       }
       else if(value['officeIndices'][0] == 2) {
@@ -51,14 +45,7 @@ factory Post.fromJson(Map ddsjson) {
        // print(key);
         mySt = value['name'];
       }
-
-
-
-
-  });
-  print(mySt);
-  print(myLC);
-  print(myUC);
+      });
   return Post(state: mySt, lowerChamber: myLC, upperChamber: myUC);
 }
 }
@@ -75,8 +62,6 @@ void main() {
   ),
   );  //runApp
 }
-
-
 
 class FirstRoute extends StatelessWidget {
   @override
@@ -101,9 +86,14 @@ class FirstRoute extends StatelessWidget {
          //   fetchPost();
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SecondRoute(fetchPost())),
+              //MaterialPageRoute(builder: (context) => SecondRoute(fetchPost()),
+              MaterialPageRoute(builder: (context) {
+                 myPost = fetchPost();
+                SecondRoute mySR = SecondRoute(myPost.state, myPost.lowerChamber, myPost.upperChamber);
+              }
             );
-          }
+              ),
+          } //onPressed
         ),
       ),
   ]
